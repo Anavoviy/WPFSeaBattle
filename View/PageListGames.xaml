@@ -1,0 +1,43 @@
+﻿<Page x:Class="SeaBattleWPF.View.PageListGames"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SeaBattleWPF.View"
+      xmlns:vm="clr-namespace:SeaBattleWPF.VM"
+      xmlns:dto="clr-namespace:SeaBattleRepository.DTO"
+      mc:Ignorable="d" 
+      DataContext="{DynamicResource vm}"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PageListGames">
+    <Page.Resources>
+        <vm:PageListGamesVM x:Key="vm"/>
+        <DataTemplate DataType="{x:Type dto:GameDTO}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="{Binding DatetimeStartGame, StringFormat=dd.MM.yyyy}"/>
+                <Label Grid.Column="1" Content="{Binding Creator.Login}"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Создать" Command="{Binding CreateGame}"/>
+            <Button Content="Присоединиться" Command="{Binding JoinGame}"/>
+            <Button Content="Обновить список игр" Command="{Binding RefreshGames}"/>
+        </StackPanel>
+        <ListBox Grid.Row="1" 
+                 HorizontalContentAlignment="Stretch"
+                 ItemsSource="{Binding Games}"
+                 SelectedItem="{Binding SelectedGame}"/>
+    </Grid>
+</Page>
